@@ -10,12 +10,12 @@ const {
 } = require("electron");
 const windowStateKeeper = require("electron-window-state");
 
-const GOOGLE_MEET_URL = "https://meet.google.com/";
+const GOTOMEETING_URL = "https://app.gotomeeting.com/";
 
 function createMainWindow() {
   const mainWindowState = windowStateKeeper({
-    defaultWidth: 1000,
-    defaultHeight: 800,
+    defaultWidth: 800,
+    defaultHeight: 600,
     fullScreen: false,
     maximize: true,
   });
@@ -42,7 +42,7 @@ function createMainWindow() {
     }
   });
 
-  const googleMeetView = (global.googleMeetView = new BrowserView({
+  const goToMeetingView = (global.goToMeetingView = new BrowserView({
     webPreferences: {
       preload: path.join(
         __dirname,
@@ -53,27 +53,27 @@ function createMainWindow() {
       ),
     },
   }));
-  mainWindow.setBrowserView(googleMeetView);
-  googleMeetView.webContents.loadURL(GOOGLE_MEET_URL);
-  googleMeetView.setBounds({
+  mainWindow.setBrowserView(goToMeetingView);
+  goToMeetingView.webContents.loadURL(GOTOMEETING_URL);
+  goToMeetingView.setBounds({
     x: 0,
     y: 40,
     width: mainWindow.getBounds().width,
     height: mainWindow.getBounds().height - 40,
   });
-  googleMeetView.webContents.on("did-finish-load", () => {
-    googleMeetView.webContents.insertCSS(
+  goToMeetingView.webContents.on("did-finish-load", () => {
+    goToMeetingView.webContents.insertCSS(
       fs
-        .readFileSync(
-          path.join(__dirname, "..", "renderer", "css", "screen.css")
-        )
-        .toString()
+      .readFileSync(
+        path.join(__dirname, "..", "renderer", "css", "screen.css")
+      )
+      .toString()
     );
   });
-  // googleMeetView.webContents.openDevTools();
+  // goToMeetingView.webContents.openDevTools();
 
   mainWindow.on("resize", () => {
-    googleMeetView.setBounds({
+    goToMeetingView.setBounds({
       x: 0,
       y: 40,
       width: mainWindow.getBounds().width,
@@ -108,7 +108,7 @@ function createMainWindow() {
   });
 
   ipcMain.on("window.home", () => {
-    googleMeetView.webContents.loadURL(GOOGLE_MEET_URL);
+    goToMeetingView.webContents.loadURL(GOTOMEETING_URL);
   });
 
   let canvasWindow = createCanvasWindow();
@@ -143,7 +143,7 @@ function createMainWindow() {
   });
 
   ipcMain.on("screenshare.stop", () => {
-    googleMeetView.webContents.send("screenshare.stop");
+    goToMeetingView.webContents.send("screenshare.stop");
   });
 
   mainWindow.on("closed", () => {
@@ -204,4 +204,6 @@ function createScreenToolsWindow() {
   return screenToolsWindow;
 }
 
-module.exports = { createMainWindow };
+module.exports = {
+  createMainWindow
+};

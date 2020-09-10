@@ -1,7 +1,7 @@
 {
-  "name": "google-meet-desktop",
-  "version": "1.2.0",
-  "description": "An unofficial desktop app for Google Meet",
+  "name": "go-to-meeting-desktop",
+  "version": "1.0.0",
+  "description": "An unofficial desktop app for GoToMeeting",
   "main": "./src/index.js",
   "scripts": {
     "start": "electron .",
@@ -16,7 +16,7 @@
     "tutorial",
     "demo"
   ],
-  "author": "Arjun Ganesan",
+  "author": "CrankySupertoon",
   "license": "MIT",
   "devDependencies": {
     "electron": "^8.2.4",
@@ -27,12 +27,12 @@
     "mac-screen-capture-permissions": "^1.1.0"
   },
   "build": {
-    "appId": "com.arjunganesan.googleMeet",
-    "productName": "Google Meet",
+    "appId": "com.crankysupertoon.gotomeeting",
+    "productName": "Go To Meeting",
     "mac": {
       "extendInfo": {
-        "NSCameraUsageDescription": "This app requires camera access for video call in Google Meet.",
-        "NSMicrophoneUsageDescription": "This app requires microphone access for audio call in Google Meet."
+        "NSCameraUsageDescription": "This app requires camera access for video call in Go To Meeting.",
+        "NSMicrophoneUsageDescription": "This app requires microphone access for audio call in Go To Meeting."
       }
     }
   }
